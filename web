@@ -1,0 +1,420 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ims";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate and sanitize inputs
+    function clean_input($data) {
+        return htmlspecialchars(strip_tags(trim($data)));
+    }
+
+    $full_name = clean_input($_POST['full_name']);
+    $date_of_birth = clean_input($_POST['date_of_birth']);
+    $gender = clean_input($_POST['gender']);
+    $nationality = clean_input($_POST['nationality']);
+    $marital_status = clean_input($_POST['marital_status']);
+    $home_address = clean_input($_POST['home_address']);
+    $street_address = clean_input($_POST['street_address']);
+    $city = clean_input($_POST['city']);
+    $state_province = clean_input($_POST['state_province']);
+    $zip_postal_code = clean_input($_POST['zip_postal_code']);
+    $country = clean_input($_POST['country']);
+    $primary_phone_number = clean_input($_POST['primary_phone_number']);
+    $secondary_phone_number = clean_input($_POST['secondary_phone_number']);
+    $personal_email = clean_input($_POST['personal_email']);
+    $national_id_number = clean_input($_POST['national_id_number']);
+    $passport_number = clean_input($_POST['passport_number']);
+    $drivers_license_number = clean_input($_POST['drivers_license_number']);
+    $primary_contact_full_name = clean_input($_POST['primary_contact_full_name']);
+    $primary_contact_relationship = clean_input($_POST['primary_contact_relationship']);
+    $primary_contact_number = clean_input($_POST['primary_contact_number']);
+    $primary_contact_alternate_number = clean_input($_POST['primary_contact_alternate_number']);
+    $primary_contact_address = clean_input($_POST['primary_contact_address']);
+    $secondary_contact_full_name = clean_input($_POST['secondary_contact_full_name']);
+    $secondary_contact_relationship = clean_input($_POST['secondary_contact_relationship']);
+    $secondary_contact_number = clean_input($_POST['secondary_contact_number']);
+    $secondary_contact_alternate_number = clean_input($_POST['secondary_contact_alternate_number']);
+    $secondary_contact_address = clean_input($_POST['secondary_contact_address']);
+    $employee_id = clean_input($_POST['employee_id']);
+    $job_title = clean_input($_POST['job_title']);
+    $department = clean_input($_POST['department']);
+    $date_of_joining = clean_input($_POST['date_of_joining']);
+    $employment_type = clean_input($_POST['employment_type']);
+    $work_location = clean_input($_POST['work_location']);
+    $office_address = clean_input($_POST['office_address']);
+    $remote_work_details = clean_input($_POST['remote_work_details']);
+    $reporting_person = clean_input($_POST['reporting_person']);
+    $work_schedule = clean_input($_POST['work_schedule']);
+    $work_hours = clean_input($_POST['work_hours']);
+    $shift_details = clean_input($_POST['shift_details']);
+    $highest_degree = clean_input($_POST['highest_degree']);
+    $university_college_name = clean_input($_POST['university_college_name']);
+    $year_of_graduation = clean_input($_POST['year_of_graduation']);
+    $certification_name = clean_input($_POST['certification_name']);
+    $issuing_organization = clean_input($_POST['issuing_organization']);
+    $date_of_issuance = clean_input($_POST['date_of_issuance']);
+    $technical_skills = clean_input($_POST['technical_skills']);
+    $languages_known = clean_input($_POST['languages_known']);
+    $base_salary = clean_input($_POST['base_salary']);
+    $bonuses_commissions = clean_input($_POST['bonuses_commissions']);
+    $health_insurance_details = clean_input($_POST['health_insurance_details']);
+    $life_insurance_details = clean_input($_POST['life_insurance_details']);
+    $bank_name = clean_input($_POST['bank_name']);
+    $account_number = clean_input($_POST['account_number']);
+    $account_type = clean_input($_POST['account_type']);
+    $secondary_bank_name = clean_input($_POST['secondary_bank_name']);
+    $secondary_account_number = clean_input($_POST['secondary_account_number']);
+    $secondary_account_type = clean_input($_POST['secondary_account_type']);
+    $tax_identification_number = clean_input($_POST['tax_identification_number']);
+    $filing_status = clean_input($_POST['filing_status']);
+    $pan_number = clean_input($_POST['pan_number']);
+
+    // Prepare and bind
+    $stmt = $conn->prepare("INSERT INTO employee_info (full_name, date_of_birth, gender, nationality, marital_status, home_address, street_address, city, state_province, zip_postal_code, country, primary_phone_number, secondary_phone_number, personal_email, national_id_number, passport_number, drivers_license_number, primary_contact_full_name, primary_contact_relationship, primary_contact_number, primary_contact_alternate_number, primary_contact_address, secondary_contact_full_name, secondary_contact_relationship, secondary_contact_number, secondary_contact_alternate_number, secondary_contact_address, employee_id, job_title, department, date_of_joining, employment_type, work_location, office_address, remote_work_details, reporting_person, work_schedule, work_hours, shift_details, highest_degree, university_college_name, year_of_graduation, certification_name, issuing_organization, date_of_issuance, technical_skills, languages_known, base_salary, bonuses_commissions, health_insurance_details, life_insurance_details, bank_name, account_number, account_type, secondary_bank_name, secondary_account_number, secondary_account_type, tax_identification_number, filing_status, pan_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss", $full_name, $date_of_birth, $gender, $nationality, $marital_status, $home_address, $street_address, $city, $state_province, $zip_postal_code, $country, $primary_phone_number, $secondary_phone_number, $personal_email, $national_id_number, $passport_number, $drivers_license_number, $primary_contact_full_name, $primary_contact_relationship, $primary_contact_number, $primary_contact_alternate_number, $primary_contact_address, $secondary_contact_full_name, $secondary_contact_relationship, $secondary_contact_number, $secondary_contact_alternate_number, $secondary_contact_address, $employee_id, $job_title, $department, $date_of_joining, $employment_type, $work_location, $office_address, $remote_work_details, $reporting_person, $work_schedule, $work_hours, $shift_details, $highest_degree, $university_college_name, $year_of_graduation, $certification_name, $issuing_organization, $date_of_issuance, $technical_skills, $languages_known, $base_salary, $bonuses_commissions, $health_insurance_details, $life_insurance_details, $bank_name, $account_number, $account_type, $secondary_bank_name, $secondary_account_number, $secondary_account_type, $tax_identification_number, $filing_status, $pan_number);
+
+    if ($stmt->execute()) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Input Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .section-heading {
+            background-color: #f8f9fa; /* Light gray background */
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="section-heading">Personal Information</h1>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Full Name" aria-label="Full Name" name="full_name" id="full_name">
+            </div>
+            <div class="col">
+                <input type="date" class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" name="date_of_birth" id="date_of_birth">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select" aria-label="Gender" name="gender" id="gender">
+                    <option selected disabled>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Nationality" aria-label="Nationality" name="nationality" id="nationality">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select" aria-label="Marital Status" name="marital_status" id="marital_status">
+                    <option selected disabled>Marital Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Home Address" aria-label="Home Address" name="home_address" id="home_address">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Street Address" aria-label="Street Address" name="street_address" id="street_address" >
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="City" aria-label="City" name="city" id="city">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="State/Province" aria-label="State/Province" name="tate_province" id="state_province>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Zip/Postal Code" aria-label="Zip/Postal Code" name="zip_postal_code" id="zip_postal_code">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Country" aria-label="Country" name="country" id="country">
+            </div>
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Primary Phone Number" aria-label="Primary Phone Number" name="primary_phone_number" id="primary_phone_number">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Secondary Phone Number" aria-label="Secondary Phone Number" name="secondary_phone_number" id="secondary_phone_number">
+            </div>
+            <div class="col">
+                <input type="email" class="form-control" placeholder="Personal Email Address" aria-label="Personal Email Address" name="personal_email" id="personal_email">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="National ID Number" aria-label="National ID Number" name="national_id_number" id="national_id_number' >
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Passport Number (if applicable)" aria-label="Passport Number" name="passport_number" id="passport_number">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Driver's License Number (if applicable)" aria-label="Driver's License Number" name="drivers_license_number" id="drivers_license_number">
+            </div>
+        </div>
+
+        <h2 class="section-heading">Emergency Contact Information</h2>
+        <h3 class="section-heading">Primary Emergency Contact</h3>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Full Name" aria-label="Full Name" name="primary_contact_full_name" id="primary_contact_full_name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Relationship" aria-label="Relationship"name="primary_contact_relationship"id="primary_contact_relationship">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Contact Number" aria-label="Contact Number" name="primary_contact_number" id ="primary_contact_number">
+            </div>
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Alternate Contact Number" aria-label="Alternate Contact Number"name="primary_contact_alternate_number" id="primary_contact_alternate_number">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Address" aria-label="Address" name="primary_contact_address" id="primary_contact_address">
+            </div>
+        </div>
+
+        <h3 class="section-heading">Secondary Emergency Contact</h3>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Full Name" aria-label="Full Name" name="secondary_contact_full_name" id="secondary_contact_full_name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Relationship" aria-label="Relationship" name="secondary_contact_relationship" id="secondary_contact_relationship">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Contact Number" aria-label="Contact Number" name="secondary_contact_number" id="secondary_contact_number">
+            </div>
+            <div class="col">
+                <input type="tel" class="form-control" placeholder="Alternate Contact Number" aria-label="Alternate Contact Number" name="secondary_contact_alternate_number" id="secondary_contact_alternate_number">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Address" aria-label="Address" name="secondary_contact_address" id="secondary_contact_address" >
+            </div>
+        </div>
+
+        <h2 class="section-heading">Job Information</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Employee ID" aria-label="Employee ID" name="employee_id" id="employee_id">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Job Title" aria-label="Job Title" name="job_title " id="job_title">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Department" aria-label="Department" name="department" id="department">
+            </div>
+            <div class="col">
+                <input type="date" class="form-control" placeholder="Date of Joining" aria-label="Date of Joining" name="date_of_joining" id="date_of_joining">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select" aria-label="Employment Type">
+                    <option selected disabled>Employment Type</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Intern">Intern</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Work Location" aria-label="Work Location" name="work_location" id="work_location">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Office Address" aria-label="Office Address" name="office_address" id="office_address">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Remote Work Details (if applicable)" aria-label="Remote Work Details" name="remote_work_details" id="remote_work_details">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Reporting Person" aria-label="Reporting Person" name="reporting_person" id="reporting_person">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Work Schedule" aria-label="Work Schedule" name="work_schedule" id="work_schedule">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Work Hours" aria-label="Work Hours" name="work_schedule" id="work_schedule">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Shift Details (if applicable)" aria-label="Shift Details" name="shift_details" id="shift_details">
+            </div>
+        </div>
+
+        <h2 class="section-heading">Educational Qualifications</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Highest Degree" aria-label="Highest Degree" name="highest_degree" id="highest_degree">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="University/College Name" aria-label="University/College Name" name="university_college_name" id="university_college_name">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Year of Graduation" aria-label="Year of Graduation" name="year_of_graduation" id="year_of_graduation">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Certification Name" aria-label="Certification Name" name="certification_name" id="certification_name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Issuing Organization" aria-label="Issuing Organization" name="issuing_organization" id="issuing_organization">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="date" class="form-control" placeholder="Date of Issuance" aria-label="Date of Issuance" name="date_of_issuance" id="date_of_issuance">
+            </div>
+        </div>
+
+        <h2 class="section-heading">Skills and Competencies</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Technical Skills" aria-label="Technical Skills" name="technical_skills" id="technical_skills">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Languages Known" aria-label="Languages Known" name="languages_known" od="languages_known" >
+            </div>
+        </div>
+
+        <h2 class="section-heading">Salary Details</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Base Salary" aria-label="Base Salary" name="base_salary" id="base_salary">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Bonuses/Commissions" aria-label="Bonuses/Commissions" name="bonuses_commissions" id="bonuses_commissions">
+            </div>
+        </div>
+
+        <h2 class="section-heading">Benefits</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Health Insurance Details" aria-label="Health Insurance Details" name="health_insurance_details" id="health_insurance_details">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Life Insurance Details" aria-label="Life Insurance Details" name="life_insurance_details" id="life_insurance_details">
+            </div>
+        </div>
+
+        <h2 class="section-heading">Bank Account Details</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Bank Name" aria-label="Bank Name" name="bank_name" id="bank_name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Account Number" aria-label="Account Number" name="account_number" id="account_number">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select" aria-label="Account Type" name="account_type" id="account_type">
+                    <option selected disabled>Account Type</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Checking">Checking</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Secondary Bank Name" aria-label="Secondary Bank Name" name="secondary_bank_name" id="secondary_bank_name">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Secondary Account Number" aria-label="Secondary Account Number" name="secondary_account_number" id="secondary_account_number">
+            </div>
+            <div class="col">
+                <select class="form-select" aria-label="Secondary Account Type" name="secondary_account_type" id="secondary_account_type" >
+                    <option selected disabled>Secondary Account Type</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Checking">Checking</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="section-heading">Tax Information</h2>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Tax Identification Number" aria-label="Tax Identification Number" name="tax_identification_number" id="tax_identification_number">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Filing Status" aria-label="Filing Status" name="filing_status" id="filing_status">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="PAN Number" aria-label="PAN Number" name="pan_numbe" id="pan_numbe">
+            </div>
+        </div>
+        <div class="col-12 d">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+</body>
+</html>
